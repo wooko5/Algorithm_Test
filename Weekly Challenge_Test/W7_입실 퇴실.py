@@ -8,17 +8,17 @@
 def solution(enter, leave):
     answer = [0] * len(enter)
     room = []
-    enter_idx = 0
+    enterIdx = 0
 
-    for i in leave:
-        while i not in room:
-            room.append(enter[enter_idx])
-            enter_idx += 1
+    for leavingPerson in leave:
+        while leavingPerson not in room:
+            room.append(enter[enterIdx])
+            enterIdx += 1
         
-        room.remove(i)
-        for j in room:
-            answer[j - 1] += 1
-        answer[i - 1] += len(room)
+        room.remove(leavingPerson)
+        for roomPerson in room:
+            answer[roomPerson - 1] += 1
+        answer[leavingPerson - 1] += len(room)
 
     return answer
 
