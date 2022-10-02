@@ -18,6 +18,8 @@ T.C 첫번째꺼만 계속 시간 초과가 나서 왜 그럴까 생각하다가
 마지막 최종 경우의 수에서 모든 종류의 옷을 걸치지 않은 1가지 경우를 제외하기 때문에  
 answer - 1 을 반환한다
 """
+
+
 def solution(clothes):
     dic = dict()
     answer = 1
@@ -27,8 +29,24 @@ def solution(clothes):
             dic[clothes[i][1]] = 1
         else:
             dic[clothes[i][1]] += 1
-    
+
     for value in dic.values():
         answer *= (value+1)
 
-    return answer - 1 
+    return answer - 1
+
+
+def solution(clothes):
+    clothes_type = {}
+    for c in clothes:
+        if c[1] not in clothes_type:
+            clothes_type[c[1]] = 1
+        else:
+            clothes_type[c[1]] += 1
+
+    if len(clothes_type) > 1:
+        answer = 1
+        for key, value in clothes_type.items():
+            answer *= value
+        return answer + len(clothes)
+    return len(clothes)
