@@ -1,0 +1,1 @@
+print('aaa'.replace('a', 'b', 1))
