@@ -36,6 +36,9 @@ public class BestAlbum {
         }
 
 
+
+        
+
         triples.sort((v1, v2) -> v2.play - v1.play); //triples를 재생횟수를 기준으로 내림차순 정렬
 
         triples.forEach(v -> System.out.println("triple == " + v.genre + " " + v.play + " " + v.index));
