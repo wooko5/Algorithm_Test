@@ -2,6 +2,9 @@ package coding.stackAndQueue;
 
 import java.util.*;
 
+/**
+ * level 2 프로세스
+ */
 public class Process {
 
     public static void main(String[] args) {
