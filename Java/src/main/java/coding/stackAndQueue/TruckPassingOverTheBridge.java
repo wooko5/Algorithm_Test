@@ -1,6 +1,5 @@
 package coding.stackAndQueue;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,36 +15,37 @@ public class TruckPassingOverTheBridge {
     }
 
     private static int solution(int bridge_length, int weight, int[] truck_weights) {
-        int answer = 0;
-        int time = 1;
-
+        int time = 0;
+        int sum = 0;
         Queue<Integer> bridge = new LinkedList<>(); //다리 bridge 정수 큐 만들기
-        Queue<Integer> truck = new LinkedList<>(); //대기 중인 truck 정수 큐 만들기
 
+        for (int truck : truck_weights) {
 
-        for (int tr : truck_weights) {
-            truck.add(tr);
-        }
+            while (true) {
 
-        bridge.add(truck.poll()); //대기 중인 첫번째 트럭을 다리에 올려놓기
-
-        while (!bridge.isEmpty() && !truck.isEmpty()) {
-            time += 1;
-
-            if (bridge.size() < bridge_length) {
-                int sum = Arrays.stream((bridge.stream().mapToInt(i -> i).toArray())).sum(); //다리에 올라간 트럭의 총 무게
-                if (sum + truck.peek() <= weight) {
-                    bridge.add(truck.poll());
-                }else {
-                    bridge.add(0);
+                if (bridge.isEmpty()) { //다리에 트럭이 없는 경우
+                    sum += truck;
+                    bridge.add(truck);
+                    time += 1;
+                    break;
+                } else if (bridge.size() == bridge_length) { //다리에 트럭이 가득 찬 경우
+                    sum -= bridge.poll();
+                } else { //다리에 차량이 있는데 가득 차지 않은 경우
+                    if (sum + truck <= weight) { //다리의 올라간 차량 무게 + 다가올 차량 무게 <= 최대 다리지원
+                        sum += truck;
+                        bridge.add(truck);
+                        time += 1;
+                        break;
+                    } else {
+                        bridge.add(0);
+                        time += 1;
+                    }
                 }
-            } else {
-                bridge.poll(); //다리에 트럭이 모두 올라갔으니 나가자
             }
 
-            System.out.println("time == " + time + " bridge == " + Arrays.toString(bridge.toArray()) + " truck == " + Arrays.toString(truck.toArray()));
+//            System.out.println("time == " + time + " bridge == " + Arrays.toString(bridge.toArray()) + " truck == " + truck);
         }
 
-        return time;
+        return time + bridge_length; //마지막 트럭이 다리를 빠져나오는 시간(bridge_length)을 더해줘야 모든 트럭이 다리룰 건넘
     }
 }
