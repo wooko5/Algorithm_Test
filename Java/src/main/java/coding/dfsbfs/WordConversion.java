@@ -1,5 +1,8 @@
 package coding.dfsbfs;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class WordConversion {
 
     private int answer = 0;
@@ -7,7 +10,8 @@ public class WordConversion {
 
     public int solution(String begin, String target, String[] words) {
         visited = new boolean[words.length];
-        dfs(begin, target, words, 0);
+//        dfs(begin, target, words, 0);
+        bfs(begin, target, words);
         return answer;
     }
 
@@ -23,6 +27,39 @@ public class WordConversion {
                 dfs(words[i], target, words, count + 1);
                 visited[i] = false;
             }
+        }
+    }
+
+    public void bfs(String begin, String target, String[] words) {
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(new Node(begin, 0));
+
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            String word = node.word;
+            int index = node.index;
+            visited[index] = true;
+            if (word.equals(target)) {
+                break;
+            }
+
+            for (int i = 0; i < words.length; i++) {
+                if (!visited[i] && check(word, words[i])) {
+                    answer += 1;
+                    queue.add(new Node(words[i], i));
+                }
+            }
+        }
+    }
+
+    private static class Node {
+        private String word;
+        private int index;
+
+        public Node(String word, int index) {
+            this.word = word;
+            this.index = index;
         }
     }
 

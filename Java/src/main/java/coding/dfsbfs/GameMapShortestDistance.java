@@ -82,7 +82,7 @@ public class GameMapShortestDistance {
                 break;
             }
 
-            for (int[] way : direction) {
+            for (int[] way : direction) { 
                 int currentX = x + way[0];
                 int currentY = y + way[1];
 
